@@ -1,1 +1,5 @@
 .vscode/*
+.venv/*
+output.txt
+test.png
+rotated
