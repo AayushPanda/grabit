@@ -128,7 +128,7 @@ class SelectionWindow(QMainWindow):
         self.start_pos = None
         self.last_click_time = None
         self.timeout_timer = QTimer()
-        self.timeout_timer.timeout.connect(self.handle_timeout)
+        # self.timeout_timer.timeout.connect(self.handle_timeout)
         self.timeout_timer.setInterval(5000)  # 5 second timeout
         self.highlighted_points = []  # Store points to highlight
         self.clipboard = QApplication.clipboard()  # Initialize clipboard
@@ -144,14 +144,17 @@ class SelectionWindow(QMainWindow):
     def handle_timeout(self):
         self.close()
 
+    def copy_selected_text(self):
+        if self.highlighted_points:
+            text = ''.join(r.text for r in self.highlighted_points)
+            self.clipboard.setText(text)
+            print(f"Copied text: {text}")
+
     def keyPressEvent(self, event):
         if event.key() == Qt.Key.Key_Escape:
             self.close()
         elif event.key() == Qt.Key.Key_C and event.modifiers() == Qt.KeyboardModifier.ControlModifier:
-            if self.highlighted_points:
-                text = ''.join(r.text for r in self.highlighted_points)
-                self.clipboard.setText(text)
-                print(f"Copied text: {text}")
+            self.copy_selected_text()
 
     def paintEvent(self, event):
         painter = QPainter(self)
