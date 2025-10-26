@@ -3,3 +3,6 @@
 output.txt
 test.png
 rotated
+.*
+__pycache__/
+*.png
